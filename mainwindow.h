@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include<QKeyEvent>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,10 @@ public slots:
       * with the timer
       */
     void drawOpenGL();
+
+protected:
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
     
 private:
     Ui::MainWindow *ui;

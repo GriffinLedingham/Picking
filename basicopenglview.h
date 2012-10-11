@@ -25,9 +25,16 @@ public:
       */
     explicit BasicOpenGLView(QWidget *parent = 0);
 
+    QVector<QVector3D>  splineControlPoints;   /**< the controllpoints of our spline. */
+
+
+
 signals:
 
 public slots:
+
+    void animateGL();
+
 
 protected:
 
@@ -67,13 +74,15 @@ protected:
       */
     void mouseMoveEvent(QMouseEvent *event);
 
+
+
 private:
 
     QMatrix4x4  projectionMatrix;       /**< the projectionMatrix to describe our camera projection parameters.*/
     QMatrix4x4  viewMatrix;             /**< the view matrix to describe the location and orientation of our camera. */
 
 
-    QVector<QVector3D>  splineControlPoints;   /**< the controllpoints of our spline. */
+
 
     int64_t hoverIndex;                          /**< the index of the overed spline control point. */
 

@@ -31,8 +31,7 @@ public:
      *	@param t the parameter
      *	@return	returns the point on the curve
      */
-    QVector3D interpolateForT(float t);
-
+    QVector3D interpolateForT(float t, QVector<QVector3D> splineControlPoints, int index);
     /**
      *	calculates the vertex count for the given subdiv level
      *	@param	level the subdiv level
