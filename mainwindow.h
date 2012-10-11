@@ -23,7 +23,7 @@ public slots:
       * we use this slot to trigger our widget's redraw function
       * with the timer
       */
-    void drawOpenGL();
+    //void drawOpenGL();
 
 protected:
     void keyPressEvent(QKeyEvent* event);

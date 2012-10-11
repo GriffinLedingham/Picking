@@ -25,12 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
     animationTimer->start(20);
 }
 
-void MainWindow::drawOpenGL()
+/*void MainWindow::drawOpenGL()
 {
     // whenever drawOpenGL gets called, we only want to repaint our opengl widget
     ui->oglwidget->repaint();
     //ui->oglwidget->animateGL();
-}
+}*/
 
 MainWindow::~MainWindow()
 {

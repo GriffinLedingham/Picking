@@ -117,30 +117,27 @@ void BasicOpenGLView::paintGL()
                       QVector3D(0.0f, 1.0f, 0.0f));
     glLoadMatrixd(viewMatrix.data());
 
-
     CatmulRomInterpolation interpolator(splineControlPoints);
 
     size_t numVertices = interpolator.getVertexCountForSubdivisionLevel(4);
 
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_POINTS);
+    int subdivisions = 20;
 
     QVector3D curPoint;
     try
     {
         for(int i = 1; i < splineControlPoints.size()-2; i++)
         {
-            for(int j = 0;j<100;j++)
+            for(int j = 0;j<subdivisions;j++)
             {
-                curPoint = interpolator.interpolateForT((float)j/(float)100, splineControlPoints, i);
+                curPoint = interpolator.interpolateForT((float)j/(float)subdivisions, i);
                 glVertex3d(curPoint.x(), curPoint.y(), curPoint.z());
             }
         }
     }
     catch(...) { }
-
-
-
     glEnd();
 
     glPointSize(5.0f);
@@ -157,9 +154,7 @@ void BasicOpenGLView::paintGL()
         }
         glVertex3d(splineControlPoints[i].x(), splineControlPoints[i].y(), splineControlPoints[i].z());
     }
-
     glEnd();
-
 }
 
 void BasicOpenGLView::resizeGL(int width, int height)
