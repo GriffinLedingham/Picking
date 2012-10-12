@@ -4,7 +4,6 @@
 #include <OpenGL/glu.h>
 #include <QMouseEvent>
 #include <cmath>
-#include <OpenGL/glu.h>
 #include <ctime>
 
 float cameraZ = 0.0f;
@@ -21,6 +20,9 @@ extern bool mFor, mBack, mLeft, mRight, cUp, cDown, cLeft, cRight, cJump, cFall,
 extern int camView;
 bool mouseDown;
 bool startDrag;
+
+int pointCount = 1;
+int subdivCount = 0;
 
 int ballX,ballY,ballZ;
 
@@ -108,6 +110,8 @@ void BasicOpenGLView::animateGL()
 
 void BasicOpenGLView::paintGL()
 {
+    glEnable(GL_DEPTH_TEST);
+
     resizeGL(windowWidth,windowHeight);
 
     if(camView == 0)
@@ -124,20 +128,7 @@ void BasicOpenGLView::paintGL()
         glLoadMatrixd(viewMatrix.data());
     }
 
-    if(camView == 1)
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glMatrixMode(GL_MODELVIEW);
-        viewMatrix.setToIdentity();
-        viewMatrix.rotate(cameraRotVer,1,0,0);
-        viewMatrix.rotate(cameraRotHor,0,1,0);
-        viewMatrix.translate(cameraX,cameraY,cameraZ);
-        viewMatrix.lookAt(QVector3D(0.0f, 0.0f, -3.5f),
-                          QVector3D(0.0f, 0.1f, 0.0f),
-                          QVector3D(0.0f, 1.0f, 0.0f));
-        glLoadMatrixd(viewMatrix.data());
 
-    }
     if(camView == 2)//top
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -169,36 +160,88 @@ void BasicOpenGLView::paintGL()
                           QVector3D(0.0f, 1.0f, 0.0f));
         glLoadMatrixd(viewMatrix.data());
     }
+    glEnable(GL_DEPTH_TEST);
 
     CatmulRomInterpolation interpolator(splineControlPoints);
 
     size_t numVertices = interpolator.getVertexCountForSubdivisionLevel(4);
 
     glColor3f(1.0f, 0.0f, 0.0f);
+    glPointSize(2.0f);
     glBegin(GL_POINTS);
-    int subdivisions = 30;
+    int subdivisions = 50;
 
     QVector3D curPoint;
-    try
+    QVector3D curPoint2;
+
+
+    for(int i = 1; i < splineControlPoints.size()-2; i++)
     {
-        for(int i = 1; i < splineControlPoints.size()-2; i++)
+        for(int j = 0;j<subdivisions;j++)
         {
-            for(int j = 0;j<subdivisions;j++)
-            {
-                curPoint = interpolator.interpolateForT((float)j/(float)subdivisions, i);
-                glVertex3d(curPoint.x(), curPoint.y(), curPoint.z());
-                ballX = curPoint.x();
-                ballY = curPoint.y();
-                ballZ = curPoint.z();
-            }
+            curPoint2 = interpolator.interpolateForT((float)j/(float)subdivisions, i);
+            glColor3f(0.0f, 0.0f, 0.0f);
+            glVertex3d(curPoint2.x(), curPoint2.y(), curPoint2.z());
         }
     }
-    catch(...) { }
+    //if(delDown==0){
     glEnd();
 
-    glPointSize(5.0f);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    //glPointSize(5.0f);
+    curPoint = interpolator.interpolateForT((float)subdivCount/(float)subdivisions, pointCount);
+    //glPushMatrix();
+    if(camView == 1)//playback
+    {
+
+        //glPushMatrix();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //glMatrixMode(GL_MODELVIEW);
+        viewMatrix.setToIdentity();
+        viewMatrix.rotate(cameraRotVer,1,0,0);
+        viewMatrix.rotate(cameraRotHor,0,1,0);
+        viewMatrix.translate(curPoint.x(), -curPoint.y(), curPoint.z());
+        viewMatrix.lookAt(QVector3D(0.0f, 0.0f, -2.5f),
+                          QVector3D(0.0f, 0.0f, 1.0f),
+                          QVector3D(0.0f, 1.0f, 0.0f));
+
+        glLoadMatrixd(viewMatrix.data());
+        //glPopMatrix();
+
+    }
+    //glPopMatrix();
+
+    //glVertex3d(curPoint.x(), curPoint.y(), curPoint.z());
+    //qDebug()<< curPoint.x() << "," << curPoint.y();
+    //glPushMatrix();
+    //create the glu sphere
+    GLUquadricObj *quadric;
+
+    if(camView != 1){glPushMatrix();
+    glTranslatef(curPoint.x(), curPoint.y(), curPoint.z());
+    quadric = gluNewQuadric();
+    gluQuadricDrawStyle(quadric, GLU_FILL );
+    gluSphere(quadric,.1,1000,1000);
+    gluDeleteQuadric(quadric);
+    glPopMatrix();}
+    subdivCount++;
+    if(subdivCount==subdivisions-1)
+    {
+        if(pointCount == splineControlPoints.size()-3)
+        {
+            pointCount = 1;
+        }
+        else
+        {
+            pointCount++;
+        }
+        subdivCount = 0;
+    }
+   // }
+
+    glPointSize(10.0f);
     glBegin(GL_POINTS);
-    for(size_t i = 0; i < splineControlPoints.size(); ++i)
+    for(int i = 0; i < splineControlPoints.size(); ++i)
     {
         if(i == hoverIndex)
         {
@@ -206,15 +249,23 @@ void BasicOpenGLView::paintGL()
         }
         else
         {
-            glColor3f(0.0f, 0.0f, 0.0f);
+            glColor3f(0.0f, 1.0f, 0.0f);
         }
-        glVertex3d(splineControlPoints[i].x(), splineControlPoints[i].y(), splineControlPoints[i].z());
+        if(camView != 1){
+        glVertex3d(splineControlPoints[i].x(), splineControlPoints[i].y(), splineControlPoints[i].z());}
     }
 
     glColor3f(0.0f, 0.0f, 0.0f);
 
     glEnd();
 
+    glPushMatrix();
+    glTranslatef(0, 0, 1);
+    quadric = gluNewQuadric();
+    gluQuadricDrawStyle(quadric, GLU_FILL );
+    gluSphere(quadric,.5,1000,1000);
+    gluDeleteQuadric(quadric);
+    glPopMatrix();
 
 
 
@@ -234,7 +285,7 @@ void BasicOpenGLView::resizeGL(int width, int height)
     }
     else
     {
-        projectionMatrix.ortho(-windowWidth/100, windowWidth/100, -windowHeight/100, windowHeight/100, -10.0, 10.0);
+        projectionMatrix.ortho(-windowWidth/100, windowWidth/100, -windowHeight/100, windowHeight/100, -30.0, 30.0);
     }
     glLoadMatrixd(projectionMatrix.data());
 
@@ -263,6 +314,7 @@ void BasicOpenGLView::mousePressEvent(QMouseEvent *event)
 {
     //qDebug() << "mouse down";
     mouseDown = true;
+
     const float threshold = 0.1f;
 
     CatmulRomInterpolation interpolator(splineControlPoints);
@@ -271,9 +323,9 @@ void BasicOpenGLView::mousePressEvent(QMouseEvent *event)
 
     pointX = -(((float)event->x()-(windowWidth/2.0f))/(windowWidth/2.0f))*windowWidth/100;
     pointY = -(((float)event->y()-(windowHeight/2.0f))/(windowHeight/2.0f))*windowHeight/100;
-    if(delDown)
+    if(delDown && splineControlPoints.size() > 4)
     {
-        for(size_t i = 0; i < splineControlPoints.size(); ++i)
+        for(int i = 0; i < splineControlPoints.size(); ++i)
         {
             QVector3D curPoint = splineControlPoints[i];
 
@@ -283,6 +335,7 @@ void BasicOpenGLView::mousePressEvent(QMouseEvent *event)
 
                 if(pointX < curPoint.x()+threshold && pointX > curPoint.x()-threshold && pointY < curPoint.y()+threshold && pointY > curPoint.y()-threshold)
                 {
+                    pointCount = 1;
                     qDebug() << "delete";
                     splineControlPoints.remove(i);
                 }
@@ -302,6 +355,10 @@ void BasicOpenGLView::mousePressEvent(QMouseEvent *event)
         {
             splineControlPoints.push_back(QVector3D(0, pointY, pointX));
         }
+        else if(camView==2)
+        {
+            splineControlPoints.push_back(QVector3D(pointX, 0, pointY));
+        }
     }
 }
 
@@ -313,33 +370,7 @@ void BasicOpenGLView::mouseReleaseEvent(QMouseEvent *event)
 
 void BasicOpenGLView::cameraSpline()
 {
-    glBegin(GL_POINTS);
-    int subdivisions = 20;
 
-    CatmulRomInterpolation interpolator(splineControlPoints);
-
-    QVector3D curPoint;
-    try
-    {
-        if(camView == 1)
-        {
-            for(int i = 1; i < splineControlPoints.size()-2; i++)
-            {
-                for(int j = 0;j<subdivisions;j++)
-                {
-                    curPoint = interpolator.interpolateForT((float)j/(float)subdivisions, i);
-                    //glVertex3d(curPoint.x(), curPoint.y(), curPoint.z());
-                    cameraX = curPoint.x();
-                    cameraY = curPoint.y();
-                    cameraZ = curPoint.z();
-                    sleep(2);
-                    paintGL();
-                }
-            }
-        }
-    }
-    catch(...) { }
-    glEnd();
 }
 
 void BasicOpenGLView::mouseMoveEvent(QMouseEvent *event)
@@ -380,9 +411,31 @@ void BasicOpenGLView::mouseMoveEvent(QMouseEvent *event)
                 }
             }
             else if(startDrag && hitPoint == i)
-            {
+            {   pointCount = 1;
                 splineControlPoints[i].setX((qreal)pointX);
                 splineControlPoints[i].setY((qreal)pointY);
+                // = curPoint;
+                paintGL();
+            }
+        }
+        if(camView==2)
+        {
+            if(pointX < curPoint.x()+threshold && pointX > curPoint.x()-threshold && pointZ < curPoint.z()+threshold && pointZ > curPoint.z()-threshold)
+            {
+                //qDebug() << "hit:" << i;
+                //curPoint.setX((qreal)pointX);
+                //curPoint.setY((qreal)pointY);
+                if(mouseDown)
+                {
+                    startDrag=true;
+                    hitPoint = i;
+                }
+            }
+            else if(startDrag && hitPoint == i)
+            {
+                pointCount = 1;
+                splineControlPoints[i].setX((qreal)pointX);
+                splineControlPoints[i].setZ((qreal)pointY);
                 // = curPoint;
                 paintGL();
             }
