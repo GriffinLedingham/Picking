@@ -27,6 +27,9 @@ public:
 
     QVector<QVector3D>  splineControlPoints;   /**< the controllpoints of our spline. */
 
+    void cameraSpline();
+
+
 
 
 signals:
@@ -34,6 +37,7 @@ signals:
 public slots:
 
     void animateGL();
+    void paintGL();
 
 
 protected:
@@ -45,6 +49,7 @@ protected:
       */
     void initializeGL();
 
+
     /**
       * the function called whenever our Widget is being redrawn.
       * assume that the BasicOpenGLView's OpenGL context has already
@@ -52,7 +57,7 @@ protected:
       * this->makeCurrent(); anymore
       * Do all your rendering loop related code in there
       */
-    void paintGL();
+    //void paintGL();
 
     /**
       * method called when the widget is resized.
@@ -67,6 +72,9 @@ protected:
       * use the QMouseEvent classmembers to access the mouse information
       */
     void mousePressEvent(QMouseEvent *event);
+
+    void mouseReleaseEvent(QMouseEvent *event);
+
 
     /**
       * function called when mouse cursor is moved inside our widgets region

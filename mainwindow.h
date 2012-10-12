@@ -23,12 +23,15 @@ public slots:
       * we use this slot to trigger our widget's redraw function
       * with the timer
       */
-    //void drawOpenGL();
+    void drawOpenGL();
 
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
     
+private slots:
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
 

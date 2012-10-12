@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-bool mFor, mBack, mLeft, mRight, cUp, cDown, cLeft, cRight, cJump, cFall;
+bool mFor, mBack, mLeft, mRight, cUp, cDown, cLeft, cRight, cJump, cFall, spaceDown, delDown;
 extern float cameraZ;
 extern float cameraX;
 extern float cameraY;
 extern float cameraRotHor;
 extern float cameraRotVer;
+int camView;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,12 +26,12 @@ MainWindow::MainWindow(QWidget *parent) :
     animationTimer->start(20);
 }
 
-/*void MainWindow::drawOpenGL()
+void MainWindow::drawOpenGL()
 {
     // whenever drawOpenGL gets called, we only want to repaint our opengl widget
     ui->oglwidget->repaint();
     //ui->oglwidget->animateGL();
-}*/
+}
 
 MainWindow::~MainWindow()
 {
@@ -83,6 +84,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     {
         cUp = true;
     }
+    if(event->key() == Qt::Key_Space) //rot up
+    {
+        spaceDown = true;
+    }
+    if(event->key() == Qt::Key_Backspace) //rot up
+    {
+        delDown = true;
+    }
 
     if(event->key() == Qt::Key_Down) //rot down
     {
@@ -103,6 +112,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
+    if(event->key() == Qt::Key_Space) //rot up
+    {
+        spaceDown = false;
+    }
+    if(event->key() == Qt::Key_Backspace) //rot up
+    {
+        delDown = false;
+    }
     if(event->text() == "w")
     {
         mFor = false;
@@ -152,4 +169,24 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
     {
         cDown = false;
     }
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+
+    if(value == 0 || value == 1)
+    {
+        cameraZ = 0.0f;
+        cameraX = 0.0f;
+        cameraY = 0.0f;
+        cameraRotHor = 0.0f;
+        cameraRotVer = 0.0f;
+    }
+    /*if(value == 1)
+    {
+        ui->oglwidget->cameraSpline();
+    }*/
+
+    camView = value;
+
 }
