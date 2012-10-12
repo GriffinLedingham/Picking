@@ -22,6 +22,8 @@ extern int camView;
 bool mouseDown;
 bool startDrag;
 
+int ballX,ballY,ballZ;
+
 BasicOpenGLView::BasicOpenGLView(QWidget *parent) :
     QGLWidget(QGLFormat(QGL::SampleBuffers), parent),
     projectionMatrix(),
@@ -56,6 +58,7 @@ void BasicOpenGLView::initializeGL()
 
 void BasicOpenGLView::animateGL()
 {
+
     //Controls used to move camera, based on key input
     if(mFor == true)
     {
@@ -106,6 +109,7 @@ void BasicOpenGLView::animateGL()
 void BasicOpenGLView::paintGL()
 {
     resizeGL(windowWidth,windowHeight);
+
     if(camView == 0)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,6 +123,7 @@ void BasicOpenGLView::paintGL()
                           QVector3D(0.0f, 1.0f, 0.0f));
         glLoadMatrixd(viewMatrix.data());
     }
+
     if(camView == 1)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -182,9 +187,11 @@ void BasicOpenGLView::paintGL()
             {
                 curPoint = interpolator.interpolateForT((float)j/(float)subdivisions, i);
                 glVertex3d(curPoint.x(), curPoint.y(), curPoint.z());
+                ballX = curPoint.x();
+                ballY = curPoint.y();
+                ballZ = curPoint.z();
             }
         }
-
     }
     catch(...) { }
     glEnd();
@@ -207,6 +214,10 @@ void BasicOpenGLView::paintGL()
     glColor3f(0.0f, 0.0f, 0.0f);
 
     glEnd();
+
+
+
+
 }
 
 void BasicOpenGLView::resizeGL(int width, int height)
