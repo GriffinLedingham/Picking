@@ -32,6 +32,10 @@ public:
      *	@return	returns the point on the curve
      */
     QVector3D interpolateForT(float t, int index);
+    QVector<float> interpolateForArc();
+    void printArcTable(QVector<float> ArcLengthArray);
+
+
     /**
      *	calculates the vertex count for the given subdiv level
      *	@param	level the subdiv level

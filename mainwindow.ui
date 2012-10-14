@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>604</width>
-    <height>390</height>
+    <width>682</width>
+    <height>396</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,6 +126,32 @@
         <string>Front</string>
        </property>
       </widget>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_6">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>ArcBall Controls:
+W - Forward
+A - Left
+S - Back
+Arrow Keys - Rotate Camera
+
+Front/Side/Top:
+Click+Drag - Move Point
+Click+Space - Place Point
+Click+Delete - Delete Point
+</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
      </widget>
     </item>
    </layout>

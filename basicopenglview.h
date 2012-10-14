@@ -27,7 +27,6 @@ public:
 
     QVector<QVector3D>  splineControlPoints;   /**< the controllpoints of our spline. */
 
-    void cameraSpline();
 
 
 

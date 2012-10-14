@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Oct 11 22:12:11 2012
+** Created: Sun Oct 14 15:00:43 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,12 +38,13 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
+    QLabel *label_6;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(604, 390);
+        MainWindow->resize(682, 396);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -93,6 +94,17 @@ public:
 
         gridLayout->addWidget(frame, 1, 0, 1, 1);
 
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy2);
+        label_6->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+
+        gridLayout->addWidget(label_6, 0, 1, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -108,6 +120,17 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "TopDown", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("MainWindow", "Side", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("MainWindow", "Front", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "ArcBall Controls:\n"
+"W - Forward\n"
+"A - Left\n"
+"S - Back\n"
+"Arrow Keys - Rotate Camera\n"
+"\n"
+"Front/Side/Top:\n"
+"Click+Drag - Move Point\n"
+"Click+Space - Place Point\n"
+"Click+Delete - Delete Point\n"
+"", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
