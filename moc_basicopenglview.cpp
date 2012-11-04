@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'basicopenglview.h'
 **
-** Created: Sun Oct 14 15:00:45 2012
+** Created: Sun Nov 4 00:33:17 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

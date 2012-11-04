@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-09-13T13:41:55
+# Project created by QtCreator 2012-11-04T00:29:51
 #
 #-------------------------------------------------
 
@@ -10,13 +10,17 @@ TARGET = Picking
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    basicopenglview.cpp \
-    catmullrominterpolation.cpp
+SOURCES += \
+    mainwindow.cpp \
+    main.cpp \
+    catmullrominterpolation.cpp \
+    basicopenglview.cpp
 
-HEADERS  += mainwindow.h \
-    basicopenglview.h \
-    catmullrominterpolation.h
+HEADERS  += \
+    ui_mainwindow.h \
+    mainwindow.h \
+    catmullrominterpolation.h \
+    basicopenglview.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    mainwindow.ui
