@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>682</width>
+    <width>763</width>
     <height>396</height>
    </rect>
   </property>
@@ -22,135 +22,6 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QFrame" name="frame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>550</width>
-        <height>75</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QSlider" name="horizontalSlider">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>521</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="maximum">
-        <number>4</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>40</y>
-         <width>62</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>ArcBall</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>40</y>
-         <width>62</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Playback</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>240</x>
-         <y>40</y>
-         <width>62</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>TopDown</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_4">
-       <property name="geometry">
-        <rect>
-         <x>390</x>
-         <y>40</y>
-         <width>62</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Side</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_5">
-       <property name="geometry">
-        <rect>
-         <x>500</x>
-         <y>40</y>
-         <width>62</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Front</string>
-       </property>
-      </widget>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_6">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>ArcBall Controls:
-W - Forward
-A - Left
-S - Back
-Arrow Keys - Rotate Camera
-
-Front/Side/Top:
-Click+Drag - Move Point
-Click+Space - Place Point
-Click+Delete - Delete Point
-</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
     </item>

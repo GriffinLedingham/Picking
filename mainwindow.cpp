@@ -171,22 +171,3 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
     }
 }
 
-void MainWindow::on_horizontalSlider_valueChanged(int value)
-{
-
-    if(value == 0 || value == 1)
-    {
-        cameraZ = 0.0f;
-        cameraX = 0.0f;
-        cameraY = 0.0f;
-        cameraRotHor = 0.0f;
-        cameraRotVer = 0.0f;
-    }
-    /*if(value == 1)
-    {
-        ui->oglwidget->cameraSpline();
-    }*/
-
-    camView = value;
-
-}
